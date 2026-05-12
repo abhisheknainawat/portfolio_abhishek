@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useScroll, useTransform, useSpring, motion } from "framer-motion";
 import Overlay from "@/components/Overlay";
 
 const FRAME_COUNT = 120; // 0 to 119
@@ -103,24 +103,29 @@ export default function ScrollyCanvas() {
       img.onload = () => {
         loadedCount++;
         if (loadedCount === FRAME_COUNT) {
-          // Initial setup and draw for the first frame
+          // Initial setup
           if (canvasRef.current && loadedImages[0]) {
             setupCanvasMetrics(canvasRef.current, loadedImages[0]);
-            renderFrame(0, loadedImages[0]);
           }
           setImages(loadedImages);
         }
       };
       loadedImages.push(img);
     }
-  }, [setupCanvasMetrics, renderFrame]);
+  }, [setupCanvasMetrics]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  const rawFrameIndex = useTransform(scrollYProgress, [0, 1], [0, FRAME_COUNT - 1]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    damping: 50,
+    stiffness: 400,
+    mass: 0.1,
+  });
+
+  const rawFrameIndex = useTransform(smoothProgress, [0, 1], [0, FRAME_COUNT - 1]);
 
   useEffect(() => {
     // If images are loaded but nothing is rendered yet (e.g. state caught up), force a render

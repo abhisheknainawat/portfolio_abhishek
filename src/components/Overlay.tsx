@@ -7,17 +7,18 @@ interface OverlayProps {
 }
 
 export default function Overlay({ scrollYProgress }: OverlayProps) {
-  // Section 1: 0% to 20% fade out
-  const opacity1 = useTransform(scrollYProgress, [0, 0.15, 0.25], [1, 1, 0]);
-  const y1 = useTransform(scrollYProgress, [0, 0.25], [0, -100]);
+  // Section 1: starts fading out immediately from 0% to 20%
+  const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const y1 = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
 
-  // Section 2: fades in at 25%, peaks at 35%, out at 45%
+  // Section 2: fades in at 20%, peaks at 30%, out at 45%
   const opacity2 = useTransform(scrollYProgress, [0.2, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
   const y2 = useTransform(scrollYProgress, [0.2, 0.5], [100, -100]);
 
-  // Section 3: fades in at 55%, peaks at 65%, out at 75%
+  // Section 3: fades in at 50%, peaks at 60%, out at 75%
+  // Starts at y=0 so it does not "pop up" from the bottom, just drifts up slightly
   const opacity3 = useTransform(scrollYProgress, [0.5, 0.6, 0.7, 0.8], [0, 1, 1, 0]);
-  const y3 = useTransform(scrollYProgress, [0.5, 0.8], [100, -100]);
+  const y3 = useTransform(scrollYProgress, [0.5, 0.8], [0, -50]);
 
   return (
     <div className="w-full h-full relative pointer-events-none">
