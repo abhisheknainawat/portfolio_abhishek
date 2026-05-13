@@ -1,13 +1,25 @@
 "use client";
 
 import { motion, MotionValue, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface OverlayProps {
   scrollYProgress: MotionValue<number>;
 }
 
 export default function Overlay({ scrollYProgress }: OverlayProps) {
-  // Section 1: starts fading out immediately from 0% to 20%
+  const [hasDisappeared, setHasDisappeared] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      if (latest > 0.2 && !hasDisappeared) {
+        setHasDisappeared(true);
+      }
+    });
+    return unsubscribe;
+  }, [scrollYProgress, hasDisappeared]);
+
+  // Section 1: starts fading out immediately from 0% to 20%, but stays hidden once disappeared
   const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const y1 = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
 
@@ -24,7 +36,7 @@ export default function Overlay({ scrollYProgress }: OverlayProps) {
     <div className="w-full h-full relative pointer-events-none">
       {/* Section 1 - Center */}
       <motion.div
-        style={{ opacity: opacity1, y: y1 }}
+        style={{ opacity: hasDisappeared ? 0 : opacity1, y: y1 }}
         className="absolute inset-0 flex flex-col items-center justify-center text-center p-8"
       >
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter text-white drop-shadow-2xl mb-4">
