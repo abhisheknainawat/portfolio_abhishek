@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useScroll, useTransform, useSpring, motion } from "framer-motion";
+import { useScroll, useTransform, useSpring } from "framer-motion";
 import Overlay from "@/components/Overlay";
 
 const FRAME_COUNT = 120; // 0 to 119

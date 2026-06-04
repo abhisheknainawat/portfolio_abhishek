@@ -48,16 +48,16 @@ export default function Projects() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Selected Works
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-4">
+            Featured Projects
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl">
-            A showcase of recent projects blending aesthetic design with robust engineering.
+            A collection of my recent work showcasing modern web development techniques
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {PROJECTS.map((project, index) => (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {PROJECTS.map((project, idx) => (
             <motion.a
               key={project.id}
               href={project.link}
@@ -66,10 +66,11 @@ export default function Projects() {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group glass-card overflow-hidden cursor-pointer flex flex-col block"
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className="group block rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
+              data-magnetic={idx === 0}
             >
-              <div className="relative h-64 md:h-80 w-full overflow-hidden">
+              <div className="relative h-64 overflow-hidden">
                 <img
                   src={project.image}
                   alt={project.title}

@@ -39,11 +39,11 @@ export default function Overlay({ scrollYProgress }: OverlayProps) {
         style={{ opacity: hasDisappeared ? 0 : opacity1, y: y1 }}
         className="absolute inset-0 flex flex-col items-center justify-center text-center p-8"
       >
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter text-white drop-shadow-2xl mb-4">
-          Abhishek Nainawat
+        <h1 className="text-7xl md:text-9xl font-black tracking-tighter text-white/40 drop-shadow-2xl mb-3">
+          Abhi.
         </h1>
-        <p className="text-xl md:text-3xl text-gray-200 font-light tracking-wide drop-shadow-md">
-          Full Stack Developer.
+        <p className="text-xs md:text-lg text-white/70 font-bold tracking-[0.25em] uppercase drop-shadow-md">
+          Creative Engineer
         </p>
       </motion.div>
 
