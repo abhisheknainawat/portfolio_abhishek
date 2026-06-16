@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/header";
 import BlobCursor from "@/components/BlobCursor";
+import PageLoader from "@/components/PageLoader";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geistSans.variable, geistMono.variable)}>
       <body className="antialiased">
+        <PageLoader />
         <Header />
         <BlobCursor />
         {children}
