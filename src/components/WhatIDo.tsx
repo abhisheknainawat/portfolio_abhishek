@@ -159,7 +159,7 @@ export default function WhatIDo() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 flex flex-col items-center"
         >
-          <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 flex items-center justify-center gap-3">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 flex flex-col sm:flex-row items-center justify-center gap-3">
             What I <span className="px-4 py-1 rounded-xl dark:bg-white/10 bg-black/5 text-foreground font-extrabold font-sans hover:bg-black/10 dark:hover:bg-white/15 transition-colors duration-300">Do</span>
           </h2>
           <span className="px-6 py-2 rounded-full border border-white/10 dark:bg-white/5 bg-black/5 text-[11px] font-bold tracking-[0.25em] text-muted-foreground uppercase shadow-sm">

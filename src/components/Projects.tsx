@@ -16,7 +16,7 @@ const projects = [
         category: "Web App",
         description: "A COMPREHENSIVE DENTAL CLINIC MANAGEMENT AND BOOKING PLATFORM.",
         link: "https://dental-web-amber.vercel.app/",
-        image: "https://image.thum.io/get/width/800/crop/600/https://dental-web-amber.vercel.app/",
+        image: "/projects/dental.png",
         bgColor: "#1a2421",
     },
     {
@@ -25,7 +25,7 @@ const projects = [
         category: "Real-time App",
         description: "A REAL-TIME COLLABORATIVE WORKSPACE USING LIVEBLOCKS FOR MULTI-USER EDITING.",
         link: "https://liveblock-abhi.vercel.app/",
-        image: "https://image.thum.io/get/width/800/crop/600/https://liveblock-abhi.vercel.app/",
+        image: "/projects/liveblock.png",
         bgColor: "#1f1a30",
     },
     {
@@ -34,7 +34,7 @@ const projects = [
         category: "Service Platform",
         description: "A MULTI-SERVICE BOOKING AND PROVIDER PLATFORM FOR ON-DEMAND UTILITIES.",
         link: "https://all-services1.vercel.app/",
-        image: "https://image.thum.io/get/width/800/crop/600/https://all-services1.vercel.app/",
+        image: "/projects/servicehub.png",
         bgColor: "#24201a",
     },
     {
@@ -43,7 +43,7 @@ const projects = [
         category: "3D Experience",
         description: "AN INTERACTIVE 3D WEB EXPERIENCE BUILT WITH THREE.JS AND MODERN WEB TECHNOLOGIES.",
         link: "https://abhishek-3d-website.netlify.app/",
-        image: "https://image.thum.io/get/width/800/crop/600/https://abhishek-3d-website.netlify.app/",
+        image: "/projects/iphone.png",
         bgColor: "#1a2530",
     },
 ];
@@ -52,6 +52,7 @@ export default function Projects() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [linesVisible, setLinesVisible] = useState(false);
     const [activeIdx, setActiveIdx] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Mouse spring motion values
     const xSpring = useSpring(0, SPRING);
@@ -63,6 +64,14 @@ export default function Projects() {
     const [imgStates, setImgStates] = useState(
         projects.map(() => ({ y: 100, opacity: 0 }))
     );
+
+    // Screen resizing responsive handler
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     useEffect(() => {
         const t = setTimeout(() => setLinesVisible(true), 300);
@@ -92,12 +101,14 @@ export default function Projects() {
 
                 if (clamped <= 0) {
                     // Not yet started — waiting below
-                    return { y: 100, opacity: 0 };
+                    return { y: isMobile ? 50 : 100, opacity: 0 };
                 }
 
                 // Ease in — slide up from bottom, fade out completely off the screen
                 const eased = 1 - Math.pow(1 - clamped, 3); // ease-out cubic
-                const y = 100 - eased * 160; // 100vh → -60vh (completely exits top)
+                const y = isMobile
+                    ? (50 - eased * 75) // Slides from 50vh to -25vh in upper half
+                    : (100 - eased * 160); // 100vh → -60vh (desktop)
                 const opacity = clamped < 0.12 ? clamped / 0.12 : clamped > 0.85 ? 1 - (clamped - 0.85) / 0.15 : 1;
 
                 return { y, opacity };
@@ -113,7 +124,7 @@ export default function Projects() {
         window.addEventListener("scroll", handleScroll, { passive: true });
         handleScroll();
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [isMobile]);
 
     return (
         <section
@@ -125,15 +136,18 @@ export default function Projects() {
             {/* Sticky viewport */}
             <div
                 onPointerMove={(e) => {
+                    if (isMobile) return;
                     const bounds = e.currentTarget.getBoundingClientRect();
                     xSpring.set(e.clientX - bounds.left);
                     ySpring.set(e.clientY - bounds.top);
                 }}
                 onPointerEnter={() => {
+                    if (isMobile) return;
                     opacitySpring.set(1);
                     scaleSpring.set(1);
                 }}
                 onPointerLeave={() => {
+                    if (isMobile) return;
                     opacitySpring.set(0);
                     scaleSpring.set(0);
                 }}
@@ -143,34 +157,37 @@ export default function Projects() {
                     height: "100vh",
                     overflow: "hidden",
                     display: "flex",
+                    flexDirection: isMobile ? "column" : "row",
                     alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "none", // Hide default cursor inside section
+                    justifyContent: isMobile ? "space-between" : "center",
+                    cursor: isMobile ? "auto" : "none", // Default cursor on mobile, hidden on desktop
                 }}
             >
-                {/* Custom Spring Mouse Follow cursor */}
-                <motion.div
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        backgroundColor: "#f97316", // Orange-500
-                        x: xSpring,
-                        y: ySpring,
-                        opacity: opacitySpring,
-                        scale: scaleSpring,
-                        pointerEvents: "none",
-                        marginLeft: "-20px",
-                        marginTop: "-20px",
-                        zIndex: 4, // Below project cards and text, above lines
-                    }}
-                />
+                {/* Custom Spring Mouse Follow cursor (Desktop only) */}
+                {!isMobile && (
+                    <motion.div
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "50%",
+                            backgroundColor: "#f97316", // Orange-500
+                            x: xSpring,
+                            y: ySpring,
+                            opacity: opacitySpring,
+                            scale: scaleSpring,
+                            pointerEvents: "none",
+                            marginLeft: "-20px",
+                            marginTop: "-20px",
+                            zIndex: 4,
+                        }}
+                    />
+                )}
                 
-                {/* Decorative vertical lines — left */}
-                {[
+                {/* Decorative vertical lines — left (Desktop only) */}
+                {!isMobile && [
                     { left: "80px", height: linesVisible ? "180px" : "0px", delay: "0s" },
                     { left: "130px", height: linesVisible ? "130px" : "0px", delay: "0.05s" },
                     { left: "180px", height: linesVisible ? "220px" : "0px", delay: "0.1s" },
@@ -190,8 +207,8 @@ export default function Projects() {
                     />
                 ))}
 
-                {/* Decorative vertical lines — right */}
-                {[
+                {/* Decorative vertical lines — right (Desktop only) */}
+                {!isMobile && [
                     { right: "80px", height: linesVisible ? "160px" : "0px", delay: "0.05s" },
                     { right: "130px", height: linesVisible ? "100px" : "0px", delay: "0s" },
                     { right: "180px", height: linesVisible ? "210px" : "0px", delay: "0.1s" },
@@ -210,7 +227,7 @@ export default function Projects() {
                     />
                 ))}
 
-                {/* Project images — alternate left/right, slide upward */}
+                {/* Project images — alternate left/right on desktop, centered slide-up in top half on mobile */}
                 {projects.map((project, i) => {
                     const isRight = i % 2 === 0;
                     const { y, opacity } = imgStates[i];
@@ -219,13 +236,15 @@ export default function Projects() {
                             key={project.id}
                             style={{
                                 position: "absolute",
-                                width: "260px",
-                                height: "320px",
+                                width: isMobile ? "200px" : "260px",
+                                height: isMobile ? "240px" : "320px",
                                 borderRadius: "4px",
                                 overflow: "hidden",
                                 zIndex: 5 + i,
-                                ...(isRight ? { right: "80px" } : { left: "80px" }),
-                                top: 0,
+                                ...(isMobile
+                                    ? { left: "50%", marginLeft: "-100px", top: "10vh" }
+                                    : (isRight ? { right: "80px", top: 0 } : { left: "80px", top: 0 })
+                                ),
                                 transform: `translateY(${y}vh)`,
                                 opacity,
                                 willChange: "transform, opacity",
@@ -237,7 +256,7 @@ export default function Projects() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="group block w-full h-full relative"
-                                style={{ cursor: "none" }}
+                                style={{ cursor: isMobile ? "pointer" : "none" }}
                             >
                                 <img
                                     src={project.image}
@@ -292,16 +311,19 @@ export default function Projects() {
                     );
                 })}
 
-                {/* Fixed center content — never changes */}
+                {/* Center details content — positioned below cards on mobile */}
                 <div
                     style={{
-                        position: "relative",
+                        position: isMobile ? "absolute" : "relative",
+                        bottom: isMobile ? "12vh" : "auto",
                         zIndex: 10,
                         textAlign: "center",
                         pointerEvents: "none",
                         userSelect: "none",
                         width: "100%",
                         maxWidth: "600px",
+                        padding: "0 20px",
+                        boxSizing: "border-box",
                     }}
                 >
                     <p
@@ -311,7 +333,7 @@ export default function Projects() {
                             letterSpacing: "0.18em",
                             color: "#cccccc",
                             textTransform: "uppercase",
-                            marginBottom: "18px",
+                            marginBottom: "12px",
                         }}
                     >
                         SELECTED{" "}
@@ -351,12 +373,12 @@ export default function Projects() {
                                         <h2
                                             style={{
                                                 fontFamily: "'Arial Black', Arial, sans-serif",
-                                                fontSize: "clamp(48px, 8vw, 90px)",
+                                                fontSize: isMobile ? "32px" : "clamp(48px, 8vw, 90px)",
                                                 fontWeight: 900,
                                                 color: "#ffffff",
                                                 textTransform: "uppercase",
-                                                lineHeight: 0.9,
-                                                letterSpacing: "-2px",
+                                                lineHeight: isMobile ? 1.1 : 0.9,
+                                                letterSpacing: "-1px",
                                                 margin: 0,
                                             }}
                                         >
@@ -365,10 +387,10 @@ export default function Projects() {
                                         <span
                                             style={{
                                                 position: "absolute",
-                                                top: "-8px",
-                                                right: "-52px",
+                                                top: isMobile ? "-14px" : "-8px",
+                                                right: isMobile ? "-36px" : "-52px",
                                                 fontFamily: "Georgia, serif",
-                                                fontSize: "22px",
+                                                fontSize: isMobile ? "14px" : "22px",
                                                 color: "#e84040",
                                                 fontStyle: "italic",
                                                 fontWeight: "normal",
@@ -386,8 +408,8 @@ export default function Projects() {
                                             color: "#cccccc",
                                             textTransform: "uppercase",
                                             maxWidth: "520px",
-                                            margin: "22px auto 0",
-                                            minHeight: "33px",
+                                            margin: isMobile ? "12px auto 0" : "22px auto 0",
+                                            minHeight: isMobile ? "auto" : "33px",
                                         }}
                                     >
                                         {project.description}
@@ -402,7 +424,7 @@ export default function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
-                            marginTop: "28px",
+                            marginTop: "20px",
                             display: "inline-block",
                             border: "1.5px solid #ffffff",
                             color: "#ffffff",
@@ -410,18 +432,20 @@ export default function Projects() {
                             fontSize: "11px",
                             letterSpacing: "0.15em",
                             textTransform: "uppercase",
-                            padding: "14px 34px",
-                            cursor: "none", // Matches section custom cursor
+                            padding: isMobile ? "10px 24px" : "14px 34px",
+                            cursor: isMobile ? "pointer" : "none",
                             background: "transparent",
                             pointerEvents: "all",
                             transition: "background 0.2s, color 0.2s",
                             textDecoration: "none",
                         }}
                         onMouseEnter={(e) => {
+                            if (isMobile) return;
                             (e.target as HTMLAnchorElement).style.background = "#ffffff";
                             (e.target as HTMLAnchorElement).style.color = "#1a1a1a";
                         }}
                         onMouseLeave={(e) => {
+                            if (isMobile) return;
                             (e.target as HTMLAnchorElement).style.background = "transparent";
                             (e.target as HTMLAnchorElement).style.color = "#ffffff";
                         }}

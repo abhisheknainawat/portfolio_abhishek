@@ -155,4 +155,11 @@ body:has(.premium-projects-section:hover) #cursor-small,
 body:has(.premium-projects-section:hover) #cursor-blob {
   opacity: 0 !important;
   pointer-events: none !important;
+}
+
+@media (max-width: 767px) {
+  #cursor-small,
+  #cursor-blob {
+    display: none !important;
+  }
 }

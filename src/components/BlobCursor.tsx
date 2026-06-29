@@ -1,9 +1,26 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function BlobCursor() {
+  const [enabled, setEnabled] = useState(false);
+
   useEffect(() => {
+    const checkDevice = () => {
+      // Disable cursor on touchscreens or narrow mobile layouts
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isWide = window.innerWidth >= 768;
+      setEnabled(!isTouch && isWide);
+    };
+
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+
     const small = document.getElementById('cursor-small');
     const blob = document.getElementById('cursor-blob');
     if (!small || !blob) return;
@@ -64,7 +81,9 @@ export default function BlobCursor() {
       window.removeEventListener('mousemove', onMove);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>

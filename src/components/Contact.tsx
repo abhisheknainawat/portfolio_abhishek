@@ -140,6 +140,11 @@ export default function Contact() {
     setTimeout(() => {
       setBtnState("success");
 
+      // Formulate and launch direct mail client link
+      const mailtoUrl = `mailto:abhisheknainawat9@gmail.com?subject=New Project Request - ${encodeURIComponent(name)}&body=Hello Abhishek,%0D%0A%0D%0AI would like to reach out to build a project with you.%0D%0A%0D%0AHere are my details:%0D%0A- Name: ${encodeURIComponent(name)}%0D%0A- Email: ${encodeURIComponent(email)}%0D%0A- Project Type: ${encodeURIComponent(project)}%0D%0A- Budget Range: ${encodeURIComponent(budget)}%0D%0A%0D%0AMessage:%0D%0A${encodeURIComponent(message)}%0D%0A%0D%0ABest regards`;
+      
+      window.location.href = mailtoUrl;
+
       // Reset Form fields after 3 seconds success animation
       setTimeout(() => {
         setBtnState("idle");
