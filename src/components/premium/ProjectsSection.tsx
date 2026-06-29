@@ -4,51 +4,33 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useSpring } from "framer-motion";
 
 const SPRING = {
-    mass: 0.1,
-    damping: 10,
-    stiffness: 131,
+    mass: 0.1, // avoid Controls inertia. Lower mass = snappier motion; higher mass = lethargic motion
+    damping: 10, // its like the weight of the ball heavier the ball less it will bounce or harder the rubber band the more it will bounce
+    stiffness: 131, // like rubber Band the more you stretch the more speed it goes back to the original position
 };
 
 const projects = [
     {
         id: "01",
-        name: "DENTAL AMBER",
-        category: "Web App",
-        description: "A COMPREHENSIVE DENTAL CLINIC MANAGEMENT AND BOOKING PLATFORM.",
-        link: "https://dental-web-amber.vercel.app/",
-        image: "https://image.thum.io/get/width/800/crop/600/https://dental-web-amber.vercel.app/",
-        bgColor: "#1a2421",
+        name: "ESTELLE",
+        description: "PORTFOLIO WEBSITE FOR A SOPHISTICATED, HIGH-END ARCHITECTURAL FIRM.",
+        bgColor: "#2a2a2a",
     },
     {
         id: "02",
-        name: "LIVEBLOCKS COLLAB",
-        category: "Real-time App",
-        description: "A REAL-TIME COLLABORATIVE WORKSPACE USING LIVEBLOCKS FOR MULTI-USER EDITING.",
-        link: "https://liveblock-abhi.vercel.app/",
-        image: "https://image.thum.io/get/width/800/crop/600/https://liveblock-abhi.vercel.app/",
-        bgColor: "#1f1a30",
+        name: "MAISON",
+        description: "BRAND IDENTITY FOR A LUXURY FRENCH INTERIOR DESIGN STUDIO.",
+        bgColor: "#222222",
     },
     {
         id: "03",
-        name: "ALL SERVICES",
-        category: "Service Platform",
-        description: "A MULTI-SERVICE BOOKING AND PROVIDER PLATFORM FOR ON-DEMAND UTILITIES.",
-        link: "https://all-services1.vercel.app/",
-        image: "https://image.thum.io/get/width/800/crop/600/https://all-services1.vercel.app/",
-        bgColor: "#24201a",
-    },
-    {
-        id: "04",
-        name: "3D PORTFOLIO",
-        category: "3D Experience",
-        description: "AN INTERACTIVE 3D WEB EXPERIENCE BUILT WITH THREE.JS AND MODERN WEB TECHNOLOGIES.",
-        link: "https://abhishek-3d-website.netlify.app/",
-        image: "https://image.thum.io/get/width/800/crop/600/https://abhishek-3d-website.netlify.app/",
-        bgColor: "#1a2530",
+        name: "ATELIER",
+        description: "DIGITAL EXPERIENCE FOR A CONTEMPORARY ART GALLERY SPACE.",
+        bgColor: "#252525",
     },
 ];
 
-export default function Projects() {
+export default function ProjectsSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [linesVisible, setLinesVisible] = useState(false);
     const [activeIdx, setActiveIdx] = useState(0);
@@ -118,7 +100,6 @@ export default function Projects() {
     return (
         <section
             ref={sectionRef}
-            className="premium-projects-section"
             style={{ position: "relative", height: `${100 + projects.length * 50}vh`, background: "#000000" }}
         >
             {/* Sticky viewport */}
@@ -144,7 +125,7 @@ export default function Projects() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    cursor: "none", // Hide default cursor inside section
+                    cursor: "none", // Hide default cursor to let the custom spring-based cursor shine
                 }}
             >
                 {/* Custom Spring Mouse Follow cursor */}
@@ -167,7 +148,6 @@ export default function Projects() {
                         zIndex: 4, // Below project cards and text, above lines
                     }}
                 />
-                
                 {/* Decorative vertical lines — left */}
                 {[
                     { left: "80px", height: linesVisible ? "180px" : "0px", delay: "0s" },
@@ -231,62 +211,41 @@ export default function Projects() {
                                 transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
                             }}
                         >
-                            <a
-                                href={project.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group block w-full h-full relative"
-                                style={{ cursor: "none" }}
+                            {/* Replace with your <Image /> component */}
+                            <div
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    background: project.bgColor,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    flexDirection: "column",
+                                    gap: "8px",
+                                }}
                             >
-                                <img
-                                    src={project.image}
-                                    alt={project.name}
+                                <span
                                     style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover",
-                                        filter: "grayscale(20%) contrast(110%) brightness(80%)",
-                                        transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease",
-                                    }}
-                                    className="group-hover:scale-105 group-hover:brightness-100 group-hover:grayscale-0"
-                                />
-                                <div
-                                    style={{
-                                        position: "absolute",
-                                        inset: 0,
-                                        background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%)",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "flex-end",
-                                        padding: "16px",
-                                        boxSizing: "border-box",
+                                        fontFamily: "Georgia, serif",
+                                        fontSize: "11px",
+                                        letterSpacing: "0.15em",
+                                        color: "rgba(255,255,255,0.4)",
+                                        textTransform: "uppercase",
                                     }}
                                 >
-                                    <span
-                                        style={{
-                                            fontFamily: "Georgia, serif",
-                                            fontSize: "10px",
-                                            letterSpacing: "0.15em",
-                                            color: "rgba(255,255,255,0.5)",
-                                            textTransform: "uppercase",
-                                            marginBottom: "4px",
-                                        }}
-                                    >
-                                        Project {project.id}
-                                    </span>
-                                    <span
-                                        style={{
-                                            fontFamily: "Georgia, serif",
-                                            fontSize: "16px",
-                                            color: "#ffffff",
-                                            fontWeight: "bold",
-                                            letterSpacing: "0.05em",
-                                        }}
-                                    >
-                                        {project.name}
-                                    </span>
-                                </div>
-                            </a>
+                                    Project {project.id}
+                                </span>
+                                <span
+                                    style={{
+                                        fontFamily: "Georgia, serif",
+                                        fontSize: "20px",
+                                        color: "#e84040",
+                                        fontStyle: "italic",
+                                    }}
+                                >
+                                    {project.name.charAt(0) + project.name.slice(1).toLowerCase()}
+                                </span>
+                            </div>
                         </div>
                     );
                 })}
@@ -313,7 +272,7 @@ export default function Projects() {
                             marginBottom: "18px",
                         }}
                     >
-                        SELECTED{" "}
+                        WHAT SAYING{" "}
                         <span
                             style={{
                                 color: "#e84040",
@@ -322,12 +281,12 @@ export default function Projects() {
                                 fontSize: "13px",
                             }}
                         >
-                            &quot;WORK&quot;
+                            &quot;YES!&quot;
                         </span>{" "}
-                        SHOWCASE
+                        LOOKS LIKE
                     </p>
 
-                    {/* Stacking container for the dynamic details */}
+                    {/* Stacking container for the dynamic dynamic details */}
                     <div style={{ position: "relative", width: "100%" }}>
                         {projects.map((project, idx) => {
                             const isActive = idx === activeIdx;
@@ -350,7 +309,7 @@ export default function Projects() {
                                         <h2
                                             style={{
                                                 fontFamily: "'Arial Black', Arial, sans-serif",
-                                                fontSize: "clamp(48px, 8vw, 90px)",
+                                                fontSize: "clamp(60px, 12vw, 130px)",
                                                 fontWeight: 900,
                                                 color: "#ffffff",
                                                 textTransform: "uppercase",
@@ -396,10 +355,7 @@ export default function Projects() {
                         })}
                     </div>
 
-                    <a
-                        href={projects[activeIdx].link}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <button
                         style={{
                             marginTop: "28px",
                             display: "inline-block",
@@ -410,23 +366,22 @@ export default function Projects() {
                             letterSpacing: "0.15em",
                             textTransform: "uppercase",
                             padding: "14px 34px",
-                            cursor: "none", // Matches section custom cursor
+                            cursor: "pointer",
                             background: "transparent",
                             pointerEvents: "all",
                             transition: "background 0.2s, color 0.2s",
-                            textDecoration: "none",
                         }}
                         onMouseEnter={(e) => {
-                            (e.target as HTMLAnchorElement).style.background = "#ffffff";
-                            (e.target as HTMLAnchorElement).style.color = "#1a1a1a";
+                            (e.target as HTMLButtonElement).style.background = "#ffffff";
+                            (e.target as HTMLButtonElement).style.color = "#1a1a1a";
                         }}
                         onMouseLeave={(e) => {
-                            (e.target as HTMLAnchorElement).style.background = "transparent";
-                            (e.target as HTMLAnchorElement).style.color = "#ffffff";
+                            (e.target as HTMLButtonElement).style.background = "transparent";
+                            (e.target as HTMLButtonElement).style.color = "#ffffff";
                         }}
                     >
                         SEE PROJECT
-                    </a>
+                    </button>
                 </div>
 
                 {/* Progress dots */}

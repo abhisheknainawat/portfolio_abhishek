@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Header } from "@/components/header";
-import BlobCursor from "@/components/BlobCursor";
-import PageLoader from "@/components/PageLoader";
+import dynamic from "next/dynamic";
+
+const Header = dynamic(() => import("@/components/header").then(mod => ({ default: mod.Header })), { ssr: false });
+const BlobCursor = dynamic(() => import("@/components/BlobCursor"), { ssr: false });
+const PageLoader = dynamic(() => import("@/components/PageLoader"), { ssr: false });
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

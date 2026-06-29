@@ -150,3 +150,10 @@ body {
 #cursor-blob.glow::after {
   opacity: 1;
 }
+
+/* Hide global custom cursors when hovering over the premium projects section */
+body:has(.premium-projects-section:hover) #cursor-small,
+body:has(.premium-projects-section:hover) #cursor-blob {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

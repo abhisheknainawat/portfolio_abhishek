@@ -1,0 +1,362 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+.pf{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;width:100%;overflow-x:hidden}
+.section{padding:100px 60px;border-bottom:1px solid rgba(255,255,255,0.06);position:relative;overflow:hidden}
+.label{font-size:10px;letter-spacing:0.25em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:16px}
+.big-title{font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-0.03em;line-height:1.05;color:#fff}
+.muted{color:rgba(255,255,255,0.45);font-size:14px;line-height:1.7}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(0.92);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+.delay-1{transition-delay:0.1s}
+.delay-2{transition-delay:0.2s}
+.delay-3{transition-delay:0.3s}
+.delay-4{transition-delay:0.4s}
+.delay-5{transition-delay:0.5s}
+.delay-6{transition-delay:0.6s}
+
+/* MARQUEE */
+.marquee-wrap{padding:18px 0;background:rgba(255,255,255,0.03);border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);overflow:hidden;white-space:nowrap}
+.marquee-inner{display:inline-block;animation:marquee 25s linear infinite}
+.marquee-inner span{font-size:11px;letter-spacing:0.2em;color:rgba(255,255,255,0.35);text-transform:uppercase;padding:0 32px}
+.marquee-inner span.dot{color:rgba(255,255,255,0.15);padding:0}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.quote{font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:#fff;margin-bottom:24px}
+.quote em{color:rgba(255,255,255,0.3);font-style:normal}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.stat-card{padding:24px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;background:rgba(255,255,255,0.03);transition:border-color 0.3s,background 0.3s,transform 0.3s}
+.stat-card:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);transform:translateY(-4px)}
+.stat-num{font-size:42px;font-weight:800;letter-spacing:-0.03em;color:#fff}
+.stat-label{font-size:11px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-top:4px}
+
+/* COUNTER ANIMATION */
+.count-up{display:inline-block}
+
+/* EXPERTISE */
+.expertise-list{margin-top:48px}
+.expertise-item{border-top:1px solid rgba(255,255,255,0.08);padding:28px 0;display:grid;grid-template-columns:48px 1fr auto;gap:24px;align-items:center;cursor:pointer;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);position:relative}
+.expertise-item::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:rgba(255,255,255,0.3);transition:width 0.5s cubic-bezier(0.16,1,0.3,1)}
+.expertise-item:hover::after{width:100%}
+.expertise-item:hover .exp-title{transform:translateX(8px)}
+.exp-num{font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.1em}
+.exp-title{font-size:20px;font-weight:600;color:#fff;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+.exp-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:10px;letter-spacing:0.1em;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:20px;color:rgba(255,255,255,0.5);text-transform:uppercase;transition:border-color 0.3s,color 0.3s}
+.expertise-item:hover .tag{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8)}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+.project-card{border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;background:rgba(255,255,255,0.02);transition:border-color 0.4s,transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.4s;cursor:pointer}
+.project-card:hover{border-color:rgba(255,255,255,0.18);transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.5)}
+.project-card.featured{grid-column:span 2}
+.project-img{width:100%;height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1)}
+.project-card:hover .project-img{transform:scale(1.03)}
+.project-card.featured .project-img{height:280px}
+.project-img-bg{position:absolute;inset:0;transition:opacity 0.4s}
+.project-img-label{font-size:11px;letter-spacing:0.2em;color:rgba(255,255,255,0.2);text-transform:uppercase;position:relative;z-index:1}
+.project-body{padding:24px}
+.project-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.project-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6;margin-bottom:16px}
+.project-footer{display:flex;justify-content:space-between;align-items:center}
+.project-stack{display:flex;gap:6px;flex-wrap:wrap}
+.stack-tag{font-size:10px;padding:3px 8px;background:rgba(255,255,255,0.06);border-radius:4px;color:rgba(255,255,255,0.4)}
+.project-link{font-size:11px;letter-spacing:0.1em;color:rgba(255,255,255,0.4);text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:1px;transition:color 0.3s,border-color 0.3s}
+.project-card:hover .project-link{color:rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.6)}
+
+/* EXPERIENCE */
+.timeline{margin-top:48px;position:relative;padding-left:24px;border-left:1px solid rgba(255,255,255,0.08)}
+.timeline-item{padding:0 0 48px 32px;position:relative}
+.tl-dot{width:8px;height:8px;border-radius:50%;background:#fff;position:absolute;left:-28px;top:6px;transition:transform 0.3s,box-shadow 0.3s}
+.timeline-item:hover .tl-dot{transform:scale(1.8);box-shadow:0 0 0 4px rgba(255,255,255,0.1)}
+.tl-date{font-size:10px;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:8px}
+.tl-role{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+.tl-company{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:12px}
+.tl-impact{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;padding:12px 16px;border:1px solid rgba(255,255,255,0.06);border-radius:8px;background:rgba(255,255,255,0.02);transition:border-color 0.3s,background 0.3s}
+.timeline-item:hover .tl-impact{border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.04)}
+
+/* STACK */
+.stack-section{margin-top:48px}
+.stack-layer{margin-bottom:32px}
+.stack-layer-label{font-size:10px;letter-spacing:0.2em;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:14px}
+.stack-pills{display:flex;flex-wrap:wrap;gap:8px}
+.stack-pill{font-size:13px;padding:8px 16px;border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:rgba(255,255,255,0.65);background:rgba(255,255,255,0.03);transition:all 0.3s cubic-bezier(0.16,1,0.3,1);cursor:default}
+.stack-pill:hover{border-color:rgba(255,255,255,0.35);color:#fff;background:rgba(255,255,255,0.08);transform:translateY(-2px)}
+
+/* CONTACT */
+.contact-section{text-align:center;padding:120px 60px;position:relative;overflow:hidden}
+.contact-title{font-size:clamp(48px,8vw,100px);font-weight:800;letter-spacing:-0.04em;line-height:0.95;color:#fff;margin-bottom:40px}
+.contact-title em{color:rgba(255,255,255,0.2);font-style:normal}
+.contact-email{font-size:18px;color:rgba(255,255,255,0.5);border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:4px;display:inline-block;margin-bottom:48px;letter-spacing:0.02em;transition:color 0.3s,border-color 0.3s;text-decoration:none}
+.contact-email:hover{color:#fff;border-color:rgba(255,255,255,0.6)}
+.cta-row{display:flex;gap:16px;justify-content:center;align-items:center}
+.cta-btn{padding:14px 32px;border-radius:40px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);position:relative;overflow:hidden}
+.cta-primary{background:#fff;color:#000;border:1px solid #fff}
+.cta-primary:hover{background:rgba(255,255,255,0.85);transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,0.15)}
+.cta-secondary{background:transparent;color:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.2)}
+.cta-secondary:hover{border-color:rgba(255,255,255,0.5);color:#fff;transform:translateY(-2px)}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0}
+.view-all{font-size:11px;letter-spacing:0.1em;color:rgba(255,255,255,0.35);text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:1px;transition:color 0.3s,border-color 0.3s}
+.view-all:hover{color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.4)}
+
+/* AMBIENT ORB */
+.orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;opacity:0;transition:opacity 2s ease}
+.orb.visible{opacity:0.07}
+</style>
+
+<div class="pf" id="pf">
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <span>Backend Engineer</span><span class="dot">·</span>
+      <span>Java · Spring Boot</span><span class="dot">·</span>
+      <span>AWS · PostgreSQL</span><span class="dot">·</span>
+      <span>React · TypeScript</span><span class="dot">·</span>
+      <span>Available for Work</span><span class="dot">·</span>
+      <span>Creative Engineer</span><span class="dot">·</span>
+      <span>Backend Engineer</span><span class="dot">·</span>
+      <span>Java · Spring Boot</span><span class="dot">·</span>
+      <span>AWS · PostgreSQL</span><span class="dot">·</span>
+      <span>React · TypeScript</span><span class="dot">·</span>
+      <span>Available for Work</span><span class="dot">·</span>
+      <span>Creative Engineer</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section">
+    <div class="orb" style="width:400px;height:400px;background:#3b82f6;top:-100px;right:-100px" id="orb1"></div>
+    <div class="about-grid">
+      <div>
+        <div class="label reveal">About</div>
+        <div class="quote reveal delay-1">I build systems that <em>scale,</em> not just code that runs.</div>
+        <p class="muted reveal delay-2" style="margin-bottom:20px">B.Tech CSE (Data Science) student at IPS Academy, building production-grade backend systems as the sole backend engineer on a NEET exam platform serving real students.</p>
+        <p class="muted reveal delay-3">I care about the craft — clean architecture, thoughtful APIs, and interfaces that feel inevitable.</p>
+      </div>
+      <div class="stats-grid reveal-right delay-2">
+        <div class="stat-card">
+          <div class="stat-num"><span class="count-up" data-target="7">0</span></div>
+          <div class="stat-label">Question types engineered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num"><span class="count-up" data-target="450">0</span>+</div>
+          <div class="stat-label">Questions shipped</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num"><span class="count-up" data-target="1">0</span></div>
+          <div class="stat-label">Year production exp</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Problems to solve</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERTISE -->
+  <div class="section">
+    <div class="label reveal">What I Do</div>
+    <div class="big-title reveal delay-1">Expertise</div>
+    <div class="expertise-list">
+      <div class="expertise-item reveal delay-1">
+        <span class="exp-num">01</span>
+        <span class="exp-title">Backend Engineering</span>
+        <div class="exp-tags"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">REST APIs</span></div>
+      </div>
+      <div class="expertise-item reveal delay-2">
+        <span class="exp-num">02</span>
+        <span class="exp-title">Cloud & Infrastructure</span>
+        <div class="exp-tags"><span class="tag">AWS EC2</span><span class="tag">S3</span><span class="tag">RDS</span><span class="tag">Cognito</span></div>
+      </div>
+      <div class="expertise-item reveal delay-3">
+        <span class="exp-num">03</span>
+        <span class="exp-title">Frontend Development</span>
+        <div class="exp-tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Next.js</span></div>
+      </div>
+      <div class="expertise-item reveal delay-4">
+        <span class="exp-num">04</span>
+        <span class="exp-title">Data & Systems Design</span>
+        <div class="exp-tags"><span class="tag">PostgreSQL</span><span class="tag">System Design</span><span class="tag">Data Science</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="label reveal">Selected Work</div>
+        <div class="big-title reveal delay-1">Projects</div>
+      </div>
+      <a class="view-all reveal" href="#">View all</a>
+    </div>
+    <div class="projects-grid" style="margin-top:48px">
+      <div class="project-card featured reveal delay-1">
+        <div class="project-img" style="background:linear-gradient(135deg,#0f1923,#1a2d1a,#0d2b1a)">
+          <span class="project-img-label">QMS · Live Platform</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Question Management System</div>
+          <p class="project-desc">Production-grade NEET exam prep platform. Built the entire backend solo — Excel bulk upload pipeline for 7 question types, AWS Cognito auth, S3 image proxy, and transactional data integrity.</p>
+          <div class="project-footer">
+            <div class="project-stack">
+              <span class="stack-tag">Java 21</span><span class="stack-tag">Spring Boot</span><span class="stack-tag">PostgreSQL</span><span class="stack-tag">AWS</span><span class="stack-tag">React</span>
+            </div>
+            <a class="project-link" href="#">Live ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal delay-2">
+        <div class="project-img" style="background:linear-gradient(135deg,#1a0a2e,#2d1060,#1a0a2e)">
+          <span class="project-img-label">Portfolio · 2025</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Developer Portfolio</div>
+          <p class="project-desc">Cinematic dark-theme portfolio with blob cursor, scroll-reactive particle mesh, and page loader.</p>
+          <div class="project-footer">
+            <div class="project-stack"><span class="stack-tag">Next.js</span><span class="stack-tag">Framer Motion</span><span class="stack-tag">GSAP</span></div>
+            <a class="project-link" href="#">View ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal delay-3">
+        <div class="project-img" style="background:linear-gradient(135deg,#1a1000,#3d2800,#1a1000)">
+          <span class="project-img-label">Coming Soon</span>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Next Project</div>
+          <p class="project-desc">Currently building. Something ambitious in the data science space.</p>
+          <div class="project-footer">
+            <div class="project-stack"><span class="stack-tag">TBD</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="section">
+    <div class="label reveal">Experience</div>
+    <div class="big-title reveal delay-1">Timeline</div>
+    <div class="timeline">
+      <div class="timeline-item reveal delay-2">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2024 — Present</div>
+        <div class="tl-role">Software Engineer Intern</div>
+        <div class="tl-company">A2BN Pvt. Ltd. · Indore, India</div>
+        <div class="tl-impact">Sole backend engineer on a NEET prep platform. Engineered 7 question types, bulk Excel upload pipeline, AWS Cognito OAuth 2.0 integration, and an image proxy for CORS-safe S3 delivery. Shipped PR #18 to production.</div>
+      </div>
+      <div class="timeline-item reveal delay-3">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2022 — Present</div>
+        <div class="tl-role">B.Tech Computer Science (Data Science)</div>
+        <div class="tl-company">IPS Academy · Indore</div>
+        <div class="tl-impact">Pursuing engineering with a focus on data systems, backend architecture, and applied machine learning.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <div class="label reveal">My Arsenal</div>
+    <div class="big-title reveal delay-1">Tech Stack</div>
+    <div class="stack-section">
+      <div class="stack-layer reveal delay-2">
+        <div class="stack-layer-label">Backend</div>
+        <div class="stack-pills">
+          <span class="stack-pill">Java 21</span><span class="stack-pill">Spring Boot</span><span class="stack-pill">Spring Security</span><span class="stack-pill">REST APIs</span><span class="stack-pill">JPA / Hibernate</span>
+        </div>
+      </div>
+      <div class="stack-layer reveal delay-3">
+        <div class="stack-layer-label">Cloud & Infrastructure</div>
+        <div class="stack-pills">
+          <span class="stack-pill">AWS EC2</span><span class="stack-pill">AWS S3</span><span class="stack-pill">AWS RDS</span><span class="stack-pill">AWS Cognito</span><span class="stack-pill">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="stack-layer reveal delay-4">
+        <div class="stack-layer-label">Frontend</div>
+        <div class="stack-pills">
+          <span class="stack-pill">React</span><span class="stack-pill">TypeScript</span><span class="stack-pill">Next.js</span><span class="stack-pill">Vite</span><span class="stack-pill">Tailwind CSS</span><span class="stack-pill">Framer Motion</span>
+        </div>
+      </div>
+      <div class="stack-layer reveal delay-5">
+        <div class="stack-layer-label">Tooling</div>
+        <div class="stack-pills">
+          <span class="stack-pill">Git</span><span class="stack-pill">Vitest</span><span class="stack-pill">openpyxl</span><span class="stack-pill">Maven</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-section">
+    <div class="label reveal" style="text-align:center;margin-bottom:32px">Let's connect</div>
+    <div class="contact-title reveal delay-1">Let's build<br><em>something.</em></div>
+    <div class="reveal delay-2"><a class="contact-email" href="#">abhishek@email.com</a></div>
+    <div class="cta-row reveal delay-3">
+      <button class="cta-btn cta-primary">Download Resume</button>
+      <button class="cta-btn cta-secondary">View GitHub</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      if (entry.target.classList.contains('stats-grid') || entry.target.closest('.stats-grid')) {
+        startCounters();
+      }
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+  observer.observe(el);
+});
+
+const orbObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+    else entry.target.classList.remove('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.orb').forEach(el => orbObserver.observe(el));
+
+let counted = false;
+function startCounters() {
+  if (counted) return;
+  counted = true;
+  document.querySelectorAll('.count-up').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const duration = 1400;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+const statsEl = document.querySelector('.stats-grid');
+if (statsEl) observer.observe(statsEl);
+</script>
