@@ -68,7 +68,11 @@ export default function Experience() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, delay: idx * 0.15 }}
-                className="relative group dark:bg-white/[0.01] bg-[#f8f9fa] border dark:border-white/[0.04] border-black/[0.06] dark:hover:border-white/[0.08] hover:border-black/[0.12] dark:hover:bg-white/[0.02] hover:bg-black/[0.01] p-8 md:p-12 rounded-[28px] transition-all duration-500 shadow-xl"
+                className={`relative group dark:bg-white/[0.01] bg-[#f8f9fa] border dark:border-white/[0.04] border-black/[0.06] p-8 md:p-12 rounded-[28px] transition-all duration-500 shadow-xl ${
+                  item.type === "work"
+                    ? "hover:border-emerald-500/30 dark:hover:border-emerald-500/30 hover:shadow-[0_0_40px_rgba(52,211,153,0.06)]"
+                    : "hover:border-indigo-500/30 dark:hover:border-indigo-500/30 hover:shadow-[0_0_40px_rgba(129,140,248,0.06)]"
+                }`}
               >
                 {/* Timeline dot */}
                 <div className={`absolute left-[-41px] md:left-[-57px] top-[40px] w-4 h-4 rounded-full border-4 dark:border-[#0b0c10] border-white group-hover:scale-125 transition-transform duration-300 shadow-[0_0_12px_rgba(52,211,153,0.5)] ${
@@ -78,8 +82,8 @@ export default function Experience() {
                 {/* Title Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h3 className={`text-2xl md:text-3xl font-extrabold mb-2 ${
-                      item.type === "work" ? "text-emerald-400" : "text-indigo-400"
+                    <h3 className={`text-2xl md:text-3xl font-extrabold mb-2 text-foreground transition-colors duration-300 ${
+                      item.type === "work" ? "group-hover:text-emerald-400" : "group-hover:text-indigo-400"
                     }`}>
                       {item.role}
                     </h3>
@@ -110,11 +114,19 @@ export default function Experience() {
                   {item.points.map((point, pIdx) => (
                     <li
                       key={pIdx}
-                      className="flex items-start gap-3 text-[15px] text-muted-foreground leading-relaxed font-medium transition-colors hover:text-foreground/80"
+                      className="flex items-start gap-3 text-[15px] text-muted-foreground leading-relaxed font-medium transition-colors hover:text-foreground/95"
                     >
-                      <span className={`mt-1.5 select-none text-xs ${
-                        item.type === "work" ? "text-emerald-400" : "text-indigo-400"
-                      }`}>▸</span>
+                      <svg 
+                        className={`h-3 w-3 mt-1.5 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 ${
+                          item.type === "work" ? "text-emerald-400" : "text-indigo-400"
+                        }`} 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor" 
+                        strokeWidth={3}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
                       <span>{point}</span>
                     </li>
                   ))}

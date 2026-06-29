@@ -12,7 +12,7 @@ const SPRING = {
 const projects = [
     {
         id: "01",
-        name: "DENTAL AMBER",
+        name: "DENTAL WEB",
         category: "Web App",
         description: "A COMPREHENSIVE DENTAL CLINIC MANAGEMENT AND BOOKING PLATFORM.",
         link: "https://dental-web-amber.vercel.app/",
@@ -30,7 +30,7 @@ const projects = [
     },
     {
         id: "03",
-        name: "ALL SERVICES",
+        name: "SERVICE HUB",
         category: "Service Platform",
         description: "A MULTI-SERVICE BOOKING AND PROVIDER PLATFORM FOR ON-DEMAND UTILITIES.",
         link: "https://all-services1.vercel.app/",
@@ -39,7 +39,7 @@ const projects = [
     },
     {
         id: "04",
-        name: "3D PORTFOLIO",
+        name: "3D IPHONE SHOWCASE",
         category: "3D Experience",
         description: "AN INTERACTIVE 3D WEB EXPERIENCE BUILT WITH THREE.JS AND MODERN WEB TECHNOLOGIES.",
         link: "https://abhishek-3d-website.netlify.app/",
