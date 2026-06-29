@@ -3,10 +3,12 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const Header = dynamic(() => import("@/components/header").then(mod => ({ default: mod.Header })), { ssr: false });
 const BlobCursor = dynamic(() => import("@/components/BlobCursor"), { ssr: false });
 const PageLoader = dynamic(() => import("@/components/PageLoader"), { ssr: false });
+const SmoothScroll = dynamic(() => import("@/components/SmoothScroll"), { ssr: false });
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,12 +32,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geistSans.variable, geistMono.variable)}>
+    <html lang="en" className={cn("font-sans", geistSans.variable, geistMono.variable)} suppressHydrationWarning>
       <body className="antialiased">
-        <PageLoader />
-        <Header />
-        <BlobCursor />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <PageLoader />
+          <Header />
+          <BlobCursor />
+          <SmoothScroll />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

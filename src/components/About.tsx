@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <section className="relative min-h-[80vh] bg-[#0b0c10] py-32 px-6 md:px-24 flex flex-col justify-center overflow-hidden border-b border-white/[0.04]">
+    <section id="about" className="relative min-h-[80vh] bg-background text-foreground transition-colors duration-300 py-32 px-6 md:px-24 flex flex-col justify-center overflow-hidden border-b border-white/[0.04]">
       {/* Background Ambient Glows */}
       <div className="absolute top-1/2 left-1/4 w-[400px] h-[400px] rounded-full bg-indigo-500/5 blur-[100px] pointer-events-none -translate-y-1/2" />
 
@@ -16,7 +16,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative rounded-[28px] overflow-hidden border border-white/[0.08] shadow-2xl aspect-[4/3] lg:aspect-[1/1] w-full max-w-[500px] mx-auto group"
+            className="relative rounded-[28px] overflow-hidden border dark:border-white/[0.08] border-black/[0.08] shadow-2xl aspect-[4/3] lg:aspect-[1/1] w-full max-w-[500px] mx-auto group"
           >
             <img
               src="/about_retro.jpg"
@@ -37,28 +37,26 @@ export default function About() {
           >
             {/* Section Heading */}
             <div className="mb-4">
-              <h2 className="text-5xl md:text-6xl font-bold text-white flex items-center gap-3">
-                About <span className="px-4 py-1.5 rounded-2xl bg-white/10 text-white font-extrabold font-sans border border-white/10 shadow-inner">Me</span>
+              <h2 className="text-5xl md:text-6xl font-bold text-foreground flex items-center gap-3">
+                About <span className="px-4 py-1.5 rounded-2xl dark:bg-white/10 bg-black/5 text-foreground font-extrabold font-sans border dark:border-white/10 border-black/10 shadow-inner">Me</span>
               </h2>
             </div>
 
             {/* Paragraphs */}
-            <p className="text-lg text-gray-300 leading-relaxed font-medium">
-              I am a <span className="font-semibold text-white">Full Stack Engineer</span> and{" "}
-              <span className="font-semibold text-white">Creative Developer</span> with{" "}
-              <span className="text-indigo-400 font-semibold">7+ years of experience</span> building scalable, high-performance web applications for enterprise and consumer use cases. I bridge the gap between aesthetic design and robust engineering.
+            <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+              I am a <span className="font-semibold text-foreground">Software Engineer Intern</span> at A2BN Pvt. Ltd. and a B.Tech Computer Science (Data Science) student at <span className="font-semibold text-foreground">IPS Academy</span>. I specialize in building robust backend systems, RESTful API design, and full-stack solutions.
             </p>
 
-            <p className="text-base text-gray-400 leading-relaxed font-medium">
-              Strong expertise in <span className="font-semibold text-white">React, Angular, TypeScript</span>, and <span className="font-semibold text-white">Node.js</span>, with hands-on experience designing REST APIs, integrating backend services, and improving application performance and reliability.
+            <p className="text-base text-muted-foreground leading-relaxed font-medium">
+              With hands-on experience as the sole backend developer for a production NEET exam platform, I have built systems supporting Excel bulk uploads, user authorization systems (RBAC), database transaction tracing (PostgreSQL), and cloud storage pipelines (AWS S3).
             </p>
 
-            <p className="text-base text-gray-400 leading-relaxed font-medium">
-              Have worked in cross-functional, multicultural teams across <span className="font-semibold text-white">India and the UAE</span>, delivering production-ready applications used by thousands of users. Known for owning features end-to-end, writing clean and maintainable code, and collaborating closely with product and business stakeholders.
+            <p className="text-base text-muted-foreground leading-relaxed font-medium">
+              Strongly proficient in <span className="font-semibold text-foreground">Java, Spring Boot, PostgreSQL</span>, and <span className="font-semibold text-foreground">React.js</span>, I care about the craft — clean architecture, robust transactional integrity, database optimization, and high-performance APIs.
             </p>
 
-            <p className="text-base text-gray-400 leading-relaxed font-medium">
-              Currently open to <span className="text-emerald-400 font-semibold">senior/lead full-stack roles</span> in UAE or India with a focus on product-driven teams and long-term growth.
+            <p className="text-base text-muted-foreground leading-relaxed font-medium">
+              Currently open to <span className="text-emerald-400 font-semibold">Software Engineering and full-stack roles</span> where I can apply my experience in building secure, production-grade applications.
             </p>
           </motion.div>
         </div>

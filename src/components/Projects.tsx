@@ -117,6 +117,7 @@ export default function Projects() {
 
     return (
         <section
+            id="work"
             ref={sectionRef}
             className="premium-projects-section"
             style={{ position: "relative", height: `${100 + projects.length * 50}vh`, background: "#000000" }}

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { Layers, Workflow, Server, Zap } from "lucide-react";
+import { Layers, Workflow, Server, Cloud } from "lucide-react";
 
 const capabilities = [
   {
@@ -27,15 +27,15 @@ const capabilities = [
       "Engineering high-performance, secure backend services, RESTful APIs, bulk data pipelines, and database schemas using Java, Spring Boot, and PostgreSQL.",
   },
   {
-    icon: Zap,
+    icon: Cloud,
     iconColor: "#a855f7", // Violet/purple
-    title: "SaaS Projects",
+    title: "DevOps & Infrastructure",
     description:
-      "Building production-ready, multitenant SaaS platforms with secure OAuth pipelines, automated workflows, and cloud architecture.",
+      "Configuring automated CI/CD deployment pipelines, managing AWS S3 storage architectures, and containerizing software packages using Git, Docker, and shell scripting.",
   },
 ];
 
-function CapabilityCard({ item, idx }: { item: typeof capabilities[number]; idx: number }) {
+function CapabilityCard({ item }: { item: typeof capabilities[number] }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Mouse coords for 3D Tilt
@@ -62,20 +62,24 @@ function CapabilityCard({ item, idx }: { item: typeof capabilities[number]; idx:
     const width = rect.width;
     const height = rect.height;
 
-    // Mouse coordinates relative to card center (normalized -0.5 to 0.5)
-    const mouseX = (e.clientX - rect.left) / width - 0.5;
-    const mouseY = (e.clientY - rect.top) / height - 0.5;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-    x.set(mouseX);
-    y.set(mouseY);
+    // Normalize coordinates: center is (0,0), range is [-0.5, 0.5]
+    const relativeX = mouseX / width - 0.5;
+    const relativeY = mouseY / height - 0.5;
 
-    // Spotlight percentage coordinates
-    const spotlightX = ((e.clientX - rect.left) / width) * 100;
-    const spotlightY = ((e.clientY - rect.top) / height) * 100;
-    setSpotlightCoords({ px: spotlightX, py: spotlightY });
+    x.set(relativeX);
+    y.set(relativeY);
+
+    // Update spotlight coords in percentages
+    const pctX = Math.round((mouseX / width) * 100);
+    const pctY = Math.round((mouseY / height) * 100);
+    setSpotlightCoords({ px: pctX, py: pctY });
   };
 
   const handleMouseLeave = () => {
+    // Reset spring to center
     x.set(0);
     y.set(0);
   };
@@ -85,10 +89,6 @@ function CapabilityCard({ item, idx }: { item: typeof capabilities[number]; idx:
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: idx * 0.12 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -97,7 +97,7 @@ function CapabilityCard({ item, idx }: { item: typeof capabilities[number]; idx:
         transformStyle: "preserve-3d",
         perspective: 1000,
       }}
-      className="group relative rounded-[28px] p-8 md:p-12 bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.15] hover:bg-white/[0.03] transition-colors duration-500 shadow-2xl flex flex-col items-start gap-6 cursor-pointer overflow-hidden select-none"
+      className="group relative rounded-[28px] p-8 md:p-12 dark:bg-white/[0.02] bg-[#f8f9fa] border dark:border-white/[0.06] border-black/[0.06] dark:hover:border-white/[0.15] hover:border-black/[0.15] dark:hover:bg-white/[0.03] hover:bg-black/[0.01] transition-colors duration-500 shadow-2xl flex flex-col items-start gap-6 cursor-pointer overflow-hidden select-none"
     >
       {/* Spotlight highlight tracking the mouse */}
       <div
@@ -118,7 +118,7 @@ function CapabilityCard({ item, idx }: { item: typeof capabilities[number]; idx:
       {/* Icon Container */}
       <div 
         style={{ transform: "translateZ(30px)" }}
-        className="p-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] group-hover:border-white/[0.15] group-hover:bg-white/[0.07] transition-all duration-500"
+        className="p-4 rounded-2xl dark:bg-white/[0.04] bg-black/[0.02] border dark:border-white/[0.08] border-black/[0.08] dark:group-hover:border-white/[0.15] group-hover:border-black/[0.15] dark:group-hover:bg-white/[0.07] group-hover:bg-black/[0.05] transition-all duration-500"
       >
         <Icon
           size={28}
@@ -132,10 +132,10 @@ function CapabilityCard({ item, idx }: { item: typeof capabilities[number]; idx:
         style={{ transform: "translateZ(20px)" }} 
         className="flex flex-col gap-3"
       >
-        <h3 className="text-2xl md:text-3xl font-extrabold text-white group-hover:text-[#ffffff] transition-colors">
+        <h3 className="text-2xl md:text-3xl font-extrabold text-foreground transition-colors">
           {item.title}
         </h3>
-        <p className="text-base text-gray-400 leading-relaxed font-medium transition-colors group-hover:text-gray-300">
+        <p className="text-base text-muted-foreground leading-relaxed font-medium transition-colors">
           {item.description}
         </p>
       </div>
@@ -145,7 +145,7 @@ function CapabilityCard({ item, idx }: { item: typeof capabilities[number]; idx:
 
 export default function WhatIDo() {
   return (
-    <section className="relative min-h-[95vh] bg-[#0b0c10] py-32 px-6 md:px-24 flex flex-col justify-center overflow-hidden border-b border-white/[0.04]">
+    <section id="services" className="relative min-h-[95vh] bg-background text-foreground transition-colors duration-300 py-32 px-6 md:px-24 flex flex-col justify-center overflow-hidden border-b border-white/[0.04]">
       {/* Animated background ambient glows */}
       <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-500/5 blur-[120px] pointer-events-none animate-pulse-slow" />
       <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-emerald-500/5 blur-[120px] pointer-events-none animate-pulse-slow-reverse" />
@@ -159,10 +159,10 @@ export default function WhatIDo() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 flex flex-col items-center"
         >
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 flex items-center justify-center gap-3">
-            What I <span className="px-4 py-1 rounded-xl bg-white/10 text-white font-extrabold font-sans hover:bg-white/15 transition-colors duration-300">Do</span>
+          <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 flex items-center justify-center gap-3">
+            What I <span className="px-4 py-1 rounded-xl dark:bg-white/10 bg-black/5 text-foreground font-extrabold font-sans hover:bg-black/10 dark:hover:bg-white/15 transition-colors duration-300">Do</span>
           </h2>
-          <span className="px-6 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold tracking-[0.25em] text-gray-400 uppercase shadow-sm">
+          <span className="px-6 py-2 rounded-full border border-white/10 dark:bg-white/5 bg-black/5 text-[11px] font-bold tracking-[0.25em] text-muted-foreground uppercase shadow-sm">
             CORE CAPABILITIES
           </span>
         </motion.div>
@@ -170,7 +170,7 @@ export default function WhatIDo() {
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
           {capabilities.map((item, idx) => (
-            <CapabilityCard key={idx} item={item} idx={idx} />
+            <CapabilityCard key={idx} item={item} />
           ))}
         </div>
       </div>
